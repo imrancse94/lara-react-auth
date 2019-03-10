@@ -11,14 +11,8 @@ export default class Main extends Component {
             <BrowserRouter>
                 <Switch>
                     <React.Fragment>
-                    <div className="container">
-                        <div className="row justify-content-center">
-                            <div className="col-md-8">
-                                <Route path='/' exact component = {Home}/>
-                                <Route path='/login' component = {Login}/>          
-                            </div>
-                        </div>
-                    </div>
+                        <Route path='/' exact component = {Home}/>
+                        <Route path='/login' component = {Login}/>             
                     </React.Fragment>
                 </Switch>
             </BrowserRouter>
