@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Product;
 use Validator;
+use Auth;
 
 class ProductController extends BaseController
 {
@@ -33,8 +34,6 @@ class ProductController extends BaseController
     public function store(Request $request)
     {
         $input = $request->all();
-
-
         $validator = Validator::make($input, [
             'name' => 'required',
             'detail' => 'required'
@@ -84,7 +83,7 @@ class ProductController extends BaseController
     {
         $input = $request->all();
 
-
+        
         $validator = Validator::make($input, [
             'name' => 'required',
             'detail' => 'required'

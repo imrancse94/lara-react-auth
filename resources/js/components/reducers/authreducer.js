@@ -1,5 +1,6 @@
 import * as myactions from '../actions';
 
+
 const init = {
    isAuthenticated: false,
    user:{},
@@ -11,7 +12,7 @@ const authReducer = (state = init, action) => {
          case myactions.SET_USER:{
             return {
                user : action.payload,
-               isAuthenticated: Object.keys(action.payload) === 0,
+               isAuthenticated: Object.keys(action.payload) != 0,
                error:{}
             }
          }
