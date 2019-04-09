@@ -70680,6 +70680,15 @@ var HEADERS = {
     Authorization: AuthStr
   }
 };
+
+var fetchUser = function fetchUser() {
+  return window.axios.get('/api/getAuth').then(function (response) {
+    return Promise.resolve(response);
+  }).catch(function (error) {
+    return Promise.reject(error);
+  });
+};
+
 var clearAuth = function clearAuth() {
   return function (dispatch) {
     Object(_helper_auth__WEBPACK_IMPORTED_MODULE_3__["setToken"])(null);
@@ -70724,7 +70733,6 @@ var register = function register(user) {
 };
 var signInUser = function signInUser(credentials) {
   return function (dispatch) {
-    console.log('signInUser');
     return window.axios.post(URL, credentials).then(function (response) {
       var data = response.data;
       var token = data.access_token;
@@ -70741,21 +70749,19 @@ var signInUser = function signInUser(credentials) {
     });
   };
 };
-var initAuthFromExistingToken = function initAuthFromExistingToken(cb) {
+var initAuthFromExistingToken = function initAuthFromExistingToken() {
   return function (dispatch) {
+    console.log('asas');
     Object(_helper_auth__WEBPACK_IMPORTED_MODULE_3__["checkTokenExists"])().then(function (token) {
       Object(_helper_auth__WEBPACK_IMPORTED_MODULE_3__["setToken"])(token);
       fetchUser().then(function (data) {
         dispatch(setUserData(data));
         dispatch(setAuthenticated(true));
-        cb();
       }).catch(function (anyError) {
         dispatch(clearAuth());
-        cb();
       });
     }).catch(function (anyError) {
       dispatch(clearAuth());
-      cb();
     });
   };
 };
@@ -71926,7 +71932,6 @@ function (_Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Main; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -71938,8 +71943,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Login */ "./resources/js/components/pages/Login.js");
 /* harmony import */ var _router_GuestRoute__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./router/GuestRoute */ "./resources/js/components/router/GuestRoute.js");
 /* harmony import */ var _router_AuthRoute__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./router/AuthRoute */ "./resources/js/components/router/AuthRoute.js");
-/* harmony import */ var localforage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! localforage */ "./node_modules/localforage/dist/localforage.js");
-/* harmony import */ var localforage__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(localforage__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./actions/auth */ "./resources/js/components/actions/auth.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -71967,29 +71971,23 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- //import { initAuthFromExistingToken } from './actions/auth';
-//import { setLoading } from './actions/loading';
-//import PropTypes from 'prop-types';
-//import {connect} from 'react-redux';
-// const propTypes = {
-//     initAuthFromExistingToken: PropTypes.func.isRequired
-//   };
+
 
 var Main =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Main, _Component);
 
-  function Main() {
+  function Main(props) {
     _classCallCheck(this, Main);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Main).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(Main).call(this, props));
   }
 
   _createClass(Main, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      console.log(localforage__WEBPACK_IMPORTED_MODULE_9___default.a.getItem('authtoken')); //this.props.initAuthFromExistingToken(() => this.props.setLoading(false));
+      Object(_actions_auth__WEBPACK_IMPORTED_MODULE_9__["initAuthFromExistingToken"])();
     }
   }, {
     key: "render",
@@ -72006,14 +72004,9 @@ function (_Component) {
   }]);
 
   return Main;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // Main.propTypes = propTypes;
-// const mapDispatchToProps = {
-//   initAuthFromExistingToken
-// };
-// export default connect(null, mapDispatchToProps)(Main);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-
-
+/* harmony default export */ __webpack_exports__["default"] = (Main);
 
 if (document.getElementById('example')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_4__["Provider"], {

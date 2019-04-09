@@ -16,7 +16,8 @@ Route::post('register', 'API\RegisterController@register');
 Route::post('login', 'API\LoginController@login');
   
 Route::middleware('auth:api')->group( function () {
-	
+    Route::get('getAuth', 'API\LoginController@getinfo')->name('auth.getinfo');
+    Route::get('logout', 'API\LoginController@logout');
 	Route::resource('products', 'API\ProductController');
 });
 

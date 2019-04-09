@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom';
 import store from './store/createstore';
 import {Provider} from 'react-redux';
 import Home from './pages/Home/Index';
 import Login from './pages/Login';
 import GuestRoute from './router/GuestRoute';
 import AuthRoute from './router/AuthRoute';
-import localforage from 'localforage';
-//import { initAuthFromExistingToken } from './actions/auth';
-//import { setLoading } from './actions/loading';
-//import PropTypes from 'prop-types';
-//import {connect} from 'react-redux';
+import { initAuthFromExistingToken } from './actions/auth';
 
-// const propTypes = {
-//     initAuthFromExistingToken: PropTypes.func.isRequired
-//   };
 
-  export default class Main extends Component {
 
+
+class Main extends Component {
+
+    constructor(props){
+        super(props);
+        
+      }
     componentDidMount () {
-        console.log(localforage.getItem('authtoken'));
-        //this.props.initAuthFromExistingToken(() => this.props.setLoading(false));
+        initAuthFromExistingToken();
       }
 
     render() {
@@ -38,13 +36,9 @@ import localforage from 'localforage';
     }
 }
 
-// Main.propTypes = propTypes;
 
-// const mapDispatchToProps = {
-//   initAuthFromExistingToken
-// };
 
-// export default connect(null, mapDispatchToProps)(Main);
+export default Main;
 
 if (document.getElementById('example')) {
     ReactDOM.render(

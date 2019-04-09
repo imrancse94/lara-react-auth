@@ -7,6 +7,12 @@ const AuthStr = 'Bearer '.concat(constants.USER_TOKEN);
 const URL = '/oauth/token';
 const HEADERS = { Accept:'application/json',headers: { Authorization: AuthStr } }
 
+const fetchUser = () => {
+  return window.axios.get('/api/getAuth')
+    .then(response => Promise.resolve(response))
+    .catch(error => Promise.reject(error));
+};
+
 export const clearAuth = () => dispatch => {
   setToken(null);
   dispatch(setUserData(null));
@@ -46,8 +52,7 @@ export const register = user => dispatch =>{
           }); 
 }
 
-export const signInUser = credentials => dispatch => {
-  console.log('signInUser');  
+export const signInUser = credentials => dispatch => {  
   return window.axios.post(URL, credentials).then(response => {
 		var data = response.data;
 		var token = data.access_token;
@@ -63,19 +68,21 @@ export const signInUser = credentials => dispatch => {
 
 
 
-export const initAuthFromExistingToken = (cb) => dispatch => {
+export const initAuthFromExistingToken = () => dispatch => {
+  console.log('asas');
   checkTokenExists().then(token => {
     setToken(token);
     fetchUser().then(data => {
+
       dispatch(setUserData(data));
       dispatch(setAuthenticated(true));
-      cb();
+      
     }).catch(anyError => {
       dispatch(clearAuth());
-      cb();
+      
     });
   }).catch(anyError => {
     dispatch(clearAuth());
-    cb();
+   
   });
 };

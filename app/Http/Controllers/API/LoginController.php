@@ -44,5 +44,16 @@ class LoginController extends BaseController
     	}
 
 
+		public function getinfo(){
+			$user = Auth::user();
+			if(!empty($user)){
+				return $this->sendResponse($user,'auth success');
+			}
+		}
+
+		public function logout(Request $request){
+			$request->user()->token()->revoke();
+			return $this->sendResponse([],'Successfully logged out');
+    	}
 
 }
