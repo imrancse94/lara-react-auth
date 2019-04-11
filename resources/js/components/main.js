@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom';
-import store from './store/createstore';
-import {Provider} from 'react-redux';
+import {BrowserRouter, Switch, withRouter} from 'react-router-dom';
 import Home from './pages/Home/Index';
 import Login from './pages/Login';
 import GuestRoute from './router/GuestRoute';
 import AuthRoute from './router/AuthRoute';
 import { initAuthFromExistingToken } from './actions/auth';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-
+const propTypes = {
+    initAuthFromExistingToken: PropTypes.func.isRequired
+  };
+  
 
 
 class Main extends Component {
 
     constructor(props){
         super(props);
-        
-      }
+        this.props.initAuthFromExistingToken();
+    }
     componentDidMount () {
-        initAuthFromExistingToken();
+        
       }
 
     render() {
@@ -36,14 +38,13 @@ class Main extends Component {
     }
 }
 
+Main.propTypes = propTypes;
+
+const mapDispatchToProps = {
+  initAuthFromExistingToken
+};
 
 
-export default Main;
+export default connect(null, mapDispatchToProps)(Main);
 
-if (document.getElementById('example')) {
-    ReactDOM.render(
-                <Provider store={store}>
-                        <Main />
-                </Provider>, 
-                document.getElementById('example'));
-}
+

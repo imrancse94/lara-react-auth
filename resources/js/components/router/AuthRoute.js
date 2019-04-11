@@ -1,6 +1,6 @@
 import React from 'react';
 import store from '../store/createstore';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect} from 'react-router-dom';
 import { setIntendedUrl, setToken } from '../helper/auth';
 import PropTypes from 'prop-types';
 import AppLayoutRoute from './AppLayoutRoute';
@@ -17,11 +17,11 @@ const AuthRoute = ({ component: Component, ...rest }) => (
       {...rest}
       render={props => {
         const { auth: { isAuthenticated } } = store.getState();
-        //console.log(store.getState());
         if (!isAuthenticated) {
             setIntendedUrl(props.location.pathname);
         }
-        
+        console.log('flag: '+isAuthenticated);
+        console.log(store.getState());
         return isAuthenticated ? (
           <AppLayoutRoute component={Component} {...props} />
         ) : (
@@ -29,8 +29,8 @@ const AuthRoute = ({ component: Component, ...rest }) => (
             to={{
               pathname: '/',
               state: { from: props.location }
-            }}
-          />
+            }}/>
+          
         );
       }
       }

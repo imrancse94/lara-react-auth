@@ -1,27 +1,23 @@
 import * as myactions from '../actions';
 
 
-const init = {
-   isAuthenticated: false,
-   user:{},
-   error:{}
-}
+const init = { user: null, isAuthenticated: false }
 
 const authReducer = (state = init, action) => {
+  
       switch(action.type){
-         case myactions.SET_USER:{
-            return {
-               user : action.payload,
-               isAuthenticated: Object.keys(action.payload) != 0,
-               error:{}
-            }
-         }
-         case myactions.USERS_ERROR:{
+         case myactions.SET_USER:
+         return Object.assign({}, state, { user: action.user });
+         case myactions.USERS_ERROR:
+         
+         {
             return{
                ...state,
                error:action.payload
             }
          }
+         case myactions.SET_AUTHENTICATED:
+         return Object.assign({}, state, { isAuthenticated: action.authenticated });
          default : return state;
       }
 }

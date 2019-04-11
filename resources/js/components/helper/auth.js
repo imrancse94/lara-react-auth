@@ -24,7 +24,6 @@ export const checkTokenExists = () => {
     if (window._.isEmpty(token)) {
       return Promise.reject(new Error('invalid token'));
     }
-    
     return Promise.resolve(token);
   });
 };

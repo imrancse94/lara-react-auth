@@ -9,8 +9,8 @@ const HEADERS = { Accept:'application/json',headers: { Authorization: AuthStr } 
 
 const fetchUser = () => {
   return window.axios.get('/api/getAuth')
-    .then(response => Promise.resolve(response))
-    .catch(error => Promise.reject(error));
+    .then(response => Promise.resolve(response.data))
+    .catch(error => Promise.reject(error.data));
 };
 
 export const clearAuth = () => dispatch => {
@@ -21,16 +21,13 @@ export const clearAuth = () => dispatch => {
 
 export const setUserData = user => ({
   type: types.SET_USER,
-  payload:{
-		user:user
-	}
+  user
+  
 });
 
 export const setAuthenticated = authenticated => ({
   type: types.SET_AUTHENTICATED,
-  payload:{
-		isAuth:authenticated
-	}
+  authenticated
 });
 
 export const register = user => dispatch =>{
@@ -56,7 +53,7 @@ export const signInUser = credentials => dispatch => {
   return window.axios.post(URL, credentials).then(response => {
 		var data = response.data;
 		var token = data.access_token;
-		console.log(data);
+    console.log(data);
     setToken(token);
     dispatch(setUserData(data));
     dispatch(setAuthenticated(true));
@@ -69,19 +66,17 @@ export const signInUser = credentials => dispatch => {
 
 
 export const initAuthFromExistingToken = () => dispatch => {
-  console.log('asas');
   checkTokenExists().then(token => {
     setToken(token);
     fetchUser().then(data => {
-
       dispatch(setUserData(data));
       dispatch(setAuthenticated(true));
-      
     }).catch(anyError => {
+      console.log('tttttt')
       dispatch(clearAuth());
-      
     });
   }).catch(anyError => {
+    console.log('uuuuuu')
     dispatch(clearAuth());
    
   });

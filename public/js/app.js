@@ -70570,23 +70570,50 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_store_createstore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/store/createstore */ "./resources/js/components/store/createstore.js");
+/* harmony import */ var _components_main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/main */ "./resources/js/components/main.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes React and other helpers. It's a great starting point while
  * building robust, powerful web applications using React + Laravel.
  */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+//require('./bootstrap');
+
 /**
  * Next, we will create a fresh React component instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+//require('./components/main');
 
 
-__webpack_require__(/*! ./components/main */ "./resources/js/components/main.js");
+
+
+
+
+react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_5__["Provider"], {
+  store: _components_store_createstore__WEBPACK_IMPORTED_MODULE_3__["default"]
+}, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_main__WEBPACK_IMPORTED_MODULE_4__["default"], null)), document.getElementById('example'));
+{
+  /* <Redirect
+             to={{
+               pathname: '/',
+               state: { from: props.location }
+             }}
+           /> */
+}
 
 /***/ }),
 
@@ -70683,9 +70710,9 @@ var HEADERS = {
 
 var fetchUser = function fetchUser() {
   return window.axios.get('/api/getAuth').then(function (response) {
-    return Promise.resolve(response);
+    return Promise.resolve(response.data);
   }).catch(function (error) {
-    return Promise.reject(error);
+    return Promise.reject(error.data);
   });
 };
 
@@ -70699,17 +70726,13 @@ var clearAuth = function clearAuth() {
 var setUserData = function setUserData(user) {
   return {
     type: _index__WEBPACK_IMPORTED_MODULE_0__["SET_USER"],
-    payload: {
-      user: user
-    }
+    user: user
   };
 };
 var setAuthenticated = function setAuthenticated(authenticated) {
   return {
     type: _index__WEBPACK_IMPORTED_MODULE_0__["SET_AUTHENTICATED"],
-    payload: {
-      isAuth: authenticated
-    }
+    authenticated: authenticated
   };
 };
 var register = function register(user) {
@@ -70751,16 +70774,17 @@ var signInUser = function signInUser(credentials) {
 };
 var initAuthFromExistingToken = function initAuthFromExistingToken() {
   return function (dispatch) {
-    console.log('asas');
     Object(_helper_auth__WEBPACK_IMPORTED_MODULE_3__["checkTokenExists"])().then(function (token) {
       Object(_helper_auth__WEBPACK_IMPORTED_MODULE_3__["setToken"])(token);
       fetchUser().then(function (data) {
         dispatch(setUserData(data));
         dispatch(setAuthenticated(true));
       }).catch(function (anyError) {
+        console.log('tttttt');
         dispatch(clearAuth());
       });
     }).catch(function (anyError) {
+      console.log('uuuuuu');
       dispatch(clearAuth());
     });
   };
@@ -71934,16 +71958,15 @@ function (_Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _store_createstore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/createstore */ "./resources/js/components/store/createstore.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _pages_Home_Index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Home/Index */ "./resources/js/components/pages/Home/Index.js");
-/* harmony import */ var _pages_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Login */ "./resources/js/components/pages/Login.js");
-/* harmony import */ var _router_GuestRoute__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./router/GuestRoute */ "./resources/js/components/router/GuestRoute.js");
-/* harmony import */ var _router_AuthRoute__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./router/AuthRoute */ "./resources/js/components/router/AuthRoute.js");
-/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./actions/auth */ "./resources/js/components/actions/auth.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _pages_Home_Index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Home/Index */ "./resources/js/components/pages/Home/Index.js");
+/* harmony import */ var _pages_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Login */ "./resources/js/components/pages/Login.js");
+/* harmony import */ var _router_GuestRoute__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./router/GuestRoute */ "./resources/js/components/router/GuestRoute.js");
+/* harmony import */ var _router_AuthRoute__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./router/AuthRoute */ "./resources/js/components/router/AuthRoute.js");
+/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/auth */ "./resources/js/components/actions/auth.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -71971,7 +71994,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
+var propTypes = {
+  initAuthFromExistingToken: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired
+};
 
 var Main =
 /*#__PURE__*/
@@ -71979,26 +72004,30 @@ function (_Component) {
   _inherits(Main, _Component);
 
   function Main(props) {
+    var _this;
+
     _classCallCheck(this, Main);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Main).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Main).call(this, props));
+
+    _this.props.initAuthFromExistingToken();
+
+    return _this;
   }
 
   _createClass(Main, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      Object(_actions_auth__WEBPACK_IMPORTED_MODULE_9__["initAuthFromExistingToken"])();
-    }
+    value: function componentDidMount() {}
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_router_GuestRoute__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_router_GuestRoute__WEBPACK_IMPORTED_MODULE_4__["default"], {
         exact: true,
         path: "/",
-        component: _pages_Login__WEBPACK_IMPORTED_MODULE_6__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_router_AuthRoute__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        component: _pages_Login__WEBPACK_IMPORTED_MODULE_3__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_router_AuthRoute__WEBPACK_IMPORTED_MODULE_5__["default"], {
         path: "/home",
-        component: _pages_Home_Index__WEBPACK_IMPORTED_MODULE_5__["default"]
+        component: _pages_Home_Index__WEBPACK_IMPORTED_MODULE_2__["default"]
       }))));
     }
   }]);
@@ -72006,13 +72035,11 @@ function (_Component) {
   return Main;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Main);
-
-if (document.getElementById('example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_4__["Provider"], {
-    store: _store_createstore__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Main, null)), document.getElementById('example'));
-}
+Main.propTypes = propTypes;
+var mapDispatchToProps = {
+  initAuthFromExistingToken: _actions_auth__WEBPACK_IMPORTED_MODULE_6__["initAuthFromExistingToken"]
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["connect"])(null, mapDispatchToProps)(Main));
 
 /***/ }),
 
@@ -72287,9 +72314,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var init = {
-  isAuthenticated: false,
-  user: {},
-  error: {}
+  user: null,
+  isAuthenticated: false
 };
 
 var authReducer = function authReducer() {
@@ -72298,13 +72324,9 @@ var authReducer = function authReducer() {
 
   switch (action.type) {
     case _actions__WEBPACK_IMPORTED_MODULE_0__["SET_USER"]:
-      {
-        return {
-          user: action.payload,
-          isAuthenticated: Object.keys(action.payload) != 0,
-          error: {}
-        };
-      }
+      return Object.assign({}, state, {
+        user: action.user
+      });
 
     case _actions__WEBPACK_IMPORTED_MODULE_0__["USERS_ERROR"]:
       {
@@ -72312,6 +72334,11 @@ var authReducer = function authReducer() {
           error: action.payload
         });
       }
+
+    case _actions__WEBPACK_IMPORTED_MODULE_0__["SET_AUTHENTICATED"]:
+      return Object.assign({}, state, {
+        isAuthenticated: action.authenticated
+      });
 
     default:
       return state;
@@ -72428,13 +72455,14 @@ var AuthRoute = function AuthRoute(_ref) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], _extends({}, rest, {
     render: function render(props) {
       var _store$getState = _store_createstore__WEBPACK_IMPORTED_MODULE_1__["default"].getState(),
-          isAuthenticated = _store$getState.auth.isAuthenticated; //console.log(store.getState());
-
+          isAuthenticated = _store$getState.auth.isAuthenticated;
 
       if (!isAuthenticated) {
         Object(_helper_auth__WEBPACK_IMPORTED_MODULE_3__["setIntendedUrl"])(props.location.pathname);
       }
 
+      console.log('flag: ' + isAuthenticated);
+      console.log(_store_createstore__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
       return isAuthenticated ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppLayoutRoute__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({
         component: Component
       }, props)) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
@@ -72495,6 +72523,7 @@ var GuestRoute = function GuestRoute(_ref) {
       var _store$getState = _store_createstore__WEBPACK_IMPORTED_MODULE_1__["default"].getState(),
           isAuthenticated = _store$getState.auth.isAuthenticated;
 
+      console.log(_store_createstore__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
       return !isAuthenticated ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, props) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
         to: {
           pathname: '/home',
