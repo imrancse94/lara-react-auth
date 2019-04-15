@@ -70584,6 +70584,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_store_createstore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/store/createstore */ "./resources/js/components/store/createstore.js");
 /* harmony import */ var _components_main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/main */ "./resources/js/components/main.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var localforage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! localforage */ "./node_modules/localforage/dist/localforage.js");
+/* harmony import */ var localforage__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(localforage__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _components_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/actions */ "./resources/js/components/actions/index.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes React and other helpers. It's a great starting point while
@@ -70603,17 +70606,55 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+var setLocalForageToken = function setLocalForageToken(token) {
+  if (window._.isEmpty(token)) {
+    localforage__WEBPACK_IMPORTED_MODULE_6___default.a.removeItem('authtoken', token);
+  }
+
+  localforage__WEBPACK_IMPORTED_MODULE_6___default.a.setItem('authtoken', token);
+};
+
+var setUserData = function setUserData(user) {
+  return {
+    type: _components_actions__WEBPACK_IMPORTED_MODULE_7__["SET_USER"],
+    user: user
+  };
+};
+
+var setAuthenticated = function setAuthenticated(authenticated) {
+  return {
+    type: _components_actions__WEBPACK_IMPORTED_MODULE_7__["SET_AUTHENTICATED"],
+    authenticated: authenticated
+  };
+};
+
+var setHttpToken = function setHttpToken(token) {
+  if (window._.isEmpty(token)) {
+    window.axios.defaults.headers.common['Authorization'] = null;
+  }
+
+  window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+};
+
+var setToken = function setToken(token) {
+  setLocalForageToken(token);
+  setHttpToken(token);
+};
+
+var token = localStorage.getItem('authtoken');
+
+if (token) {
+  setToken(token);
+  _components_store_createstore__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(setUserData(null));
+  _components_store_createstore__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(setAuthenticated(true));
+}
+
 react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_5__["Provider"], {
   store: _components_store_createstore__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_main__WEBPACK_IMPORTED_MODULE_4__["default"], null)), document.getElementById('example'));
-{
-  /* <Redirect
-             to={{
-               pathname: '/',
-               state: { from: props.location }
-             }}
-           /> */
-}
 
 /***/ }),
 
@@ -70759,7 +70800,6 @@ var signInUser = function signInUser(credentials) {
     return window.axios.post(URL, credentials).then(function (response) {
       var data = response.data;
       var token = data.access_token;
-      console.log(data);
       Object(_helper_auth__WEBPACK_IMPORTED_MODULE_3__["setToken"])(token);
       dispatch(setUserData(data));
       dispatch(setAuthenticated(true));
@@ -70780,11 +70820,9 @@ var initAuthFromExistingToken = function initAuthFromExistingToken() {
         dispatch(setUserData(data));
         dispatch(setAuthenticated(true));
       }).catch(function (anyError) {
-        console.log('tttttt');
         dispatch(clearAuth());
       });
     }).catch(function (anyError) {
-      console.log('uuuuuu');
       dispatch(clearAuth());
     });
   };
@@ -71959,14 +71997,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _pages_Home_Index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Home/Index */ "./resources/js/components/pages/Home/Index.js");
+/* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Home */ "./resources/js/components/pages/Home/index.js");
 /* harmony import */ var _pages_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Login */ "./resources/js/components/pages/Login.js");
 /* harmony import */ var _router_GuestRoute__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./router/GuestRoute */ "./resources/js/components/router/GuestRoute.js");
 /* harmony import */ var _router_AuthRoute__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./router/AuthRoute */ "./resources/js/components/router/AuthRoute.js");
-/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/auth */ "./resources/js/components/actions/auth.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./actions/auth */ "./resources/js/components/actions/auth.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -71994,40 +72030,32 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var propTypes = {
-  initAuthFromExistingToken: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func.isRequired
-};
-
 var Main =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Main, _Component);
 
-  function Main(props) {
-    var _this;
-
+  function Main() {
     _classCallCheck(this, Main);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Main).call(this, props));
-
-    _this.props.initAuthFromExistingToken();
-
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Main).apply(this, arguments));
   }
 
   _createClass(Main, [{
     key: "componentDidMount",
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      this.props.initAuthFromExistingToken();
+    }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_router_GuestRoute__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_router_AuthRoute__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        path: "/home",
+        component: _pages_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_router_GuestRoute__WEBPACK_IMPORTED_MODULE_4__["default"], {
         exact: true,
         path: "/",
         component: _pages_Login__WEBPACK_IMPORTED_MODULE_3__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_router_AuthRoute__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        path: "/home",
-        component: _pages_Home_Index__WEBPACK_IMPORTED_MODULE_2__["default"]
       }))));
     }
   }]);
@@ -72035,17 +72063,23 @@ function (_Component) {
   return Main;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-Main.propTypes = propTypes;
 var mapDispatchToProps = {
-  initAuthFromExistingToken: _actions_auth__WEBPACK_IMPORTED_MODULE_6__["initAuthFromExistingToken"]
+  initAuthFromExistingToken: _actions_auth__WEBPACK_IMPORTED_MODULE_7__["initAuthFromExistingToken"]
 };
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["connect"])(null, mapDispatchToProps)(Main));
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["connect"])(mapStateToProps, mapDispatchToProps)(Main));
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/Home/Index.js":
+/***/ "./resources/js/components/pages/Home/index.js":
 /*!*****************************************************!*\
-  !*** ./resources/js/components/pages/Home/Index.js ***!
+  !*** ./resources/js/components/pages/Home/index.js ***!
   \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -72430,6 +72464,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _AppLayoutRoute__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AppLayoutRoute */ "./resources/js/components/router/AppLayoutRoute.js");
+/* harmony import */ var _actions_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/auth */ "./resources/js/components/actions/auth.js");
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
@@ -72442,6 +72477,8 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 
 
+
+Object(_actions_auth__WEBPACK_IMPORTED_MODULE_6__["initAuthFromExistingToken"])();
 var propTypes = {
   component: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired,
   rest: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object,
@@ -72523,7 +72560,6 @@ var GuestRoute = function GuestRoute(_ref) {
       var _store$getState = _store_createstore__WEBPACK_IMPORTED_MODULE_1__["default"].getState(),
           isAuthenticated = _store$getState.auth.isAuthenticated;
 
-      console.log(_store_createstore__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
       return !isAuthenticated ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, props) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
         to: {
           pathname: '/home',

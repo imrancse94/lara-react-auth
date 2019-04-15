@@ -20,7 +20,9 @@ const setHttpToken = (token) => {
 };
 
 export const checkTokenExists = () => {
+  
   return localforage.getItem('authtoken').then((token) => {
+   
     if (window._.isEmpty(token)) {
       return Promise.reject(new Error('invalid token'));
     }

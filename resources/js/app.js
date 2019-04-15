@@ -21,6 +21,46 @@ import ReactDOM from 'react-dom';
 import store from './components/store/createstore';
 import Main from './components/main';
 import { Provider } from 'react-redux';
+import localforage from 'localforage';
+import * as types from './components/actions';
+const setLocalForageToken = token => {
+  if (window._.isEmpty(token)) {
+    localforage.removeItem('authtoken', token);
+  }
+
+  localforage.setItem('authtoken', token);
+};
+
+const setUserData = user => ({
+  type: types.SET_USER,
+  user
+});
+
+const setAuthenticated = authenticated => ({
+  type: types.SET_AUTHENTICATED,
+  authenticated
+});
+
+const setHttpToken = (token) => {
+  if (window._.isEmpty(token)) {
+    window.axios.defaults.headers.common['Authorization'] = null;
+  }
+
+  window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+};
+
+const setToken = token => {
+  setLocalForageToken(token);
+  setHttpToken(token);
+};
+
+const token = localStorage.getItem('authtoken');
+
+if(token){
+  setToken(token);
+  store.dispatch(setUserData(null));
+  store.dispatch(setAuthenticated(true));
+}
 
 ReactDOM.render(
   <Provider store={store}>
@@ -29,10 +69,3 @@ ReactDOM.render(
   document.getElementById('example')
 );
 
-
-{/* <Redirect
-            to={{
-              pathname: '/',
-              state: { from: props.location }
-            }}
-          /> */}

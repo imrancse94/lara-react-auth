@@ -14,7 +14,7 @@ const GuestRoute = ({ component: Component, ...rest }) => (
     {...rest}
     render={props => {
       const { auth: { isAuthenticated } } = store.getState();
-      console.log(store.getState());
+      
       return !isAuthenticated ? (
         <Component {...props} />
       ) : (

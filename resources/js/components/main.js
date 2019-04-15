@@ -1,36 +1,29 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Switch, withRouter} from 'react-router-dom';
-import Home from './pages/Home/Index';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import GuestRoute from './router/GuestRoute';
 import AuthRoute from './router/AuthRoute';
-import { initAuthFromExistingToken } from './actions/auth';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {initAuthFromExistingToken} from './actions/auth'
 
-const propTypes = {
-    initAuthFromExistingToken: PropTypes.func.isRequired
-  };
-  
 
 
 class Main extends Component {
-
-    constructor(props){
-        super(props);
+    
+    componentDidMount(){
         this.props.initAuthFromExistingToken();
     }
-    componentDidMount () {
-        
-      }
 
     render() {
+        
         return (
             <BrowserRouter>
                 <Switch>
                     <React.Fragment>
-                        <GuestRoute exact path="/" component={Login} />
                         <AuthRoute path="/home" component={Home} />
+                        <GuestRoute exact path="/" component={Login} />
+                       
                     </React.Fragment>
                 </Switch>
             </BrowserRouter>
@@ -38,13 +31,16 @@ class Main extends Component {
     }
 }
 
-Main.propTypes = propTypes;
 
 const mapDispatchToProps = {
-  initAuthFromExistingToken
-};
+    initAuthFromExistingToken
+}
+
+const mapStateToProps = state => ({
+    auth: state.auth
+  });
 
 
-export default connect(null, mapDispatchToProps)(Main);
+export default connect(mapStateToProps,mapDispatchToProps)(Main);
 
 

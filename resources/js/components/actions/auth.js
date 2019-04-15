@@ -53,7 +53,7 @@ export const signInUser = credentials => dispatch => {
   return window.axios.post(URL, credentials).then(response => {
 		var data = response.data;
 		var token = data.access_token;
-    console.log(data);
+    
     setToken(token);
     dispatch(setUserData(data));
     dispatch(setAuthenticated(true));
@@ -72,12 +72,9 @@ export const initAuthFromExistingToken = () => dispatch => {
       dispatch(setUserData(data));
       dispatch(setAuthenticated(true));
     }).catch(anyError => {
-      console.log('tttttt')
       dispatch(clearAuth());
     });
   }).catch(anyError => {
-    console.log('uuuuuu')
-    dispatch(clearAuth());
-   
+       dispatch(clearAuth());
   });
 };
